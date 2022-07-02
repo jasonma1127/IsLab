@@ -1,5 +1,18 @@
 # Experiment Results
 
+![image](https://user-images.githubusercontent.com/33441316/177007611-7b2f259c-4622-4209-a6f8-a24bcdaf7cd0.png)
+
+以下為 76211 比數為例 : 
+
+- COG_time: 01:57:13
+- REs_time: 01:02:20
+- CND_time: 00:00:27
+- total_time: 03:00:01
+- Feature extraction per file time: 0.1417356151425842
+
+- 本次實驗解決了 memory 不斷疊加的問題。
+- 發現存取 opcode graph 花費的時間遠大於建立的時間，所以索性不存圖了，直接轉成可訓練的 feature。
+
 # Dataset
 
 - CPU arch : armel
@@ -200,11 +213,5 @@ Predicting time: 0.1782376766204834 s
 
 
 目前只有在單一 CPU 架構跑此實驗，計畫要跑多重架構下的情境，會不會遇到 Accuracy 下降的問題，或是維度問題，因為 opcode graph 的跨架構是目前廣為人知的挑戰之一。
-
-
-
-
-
-
 
 
