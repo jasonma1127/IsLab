@@ -190,7 +190,7 @@ Predicting time: 0.1782376766204834 s
 
 ![image](https://user-images.githubusercontent.com/33441316/177004344-77cac05c-dcff-40e5-8afd-1a1b94dfcead.png)
 
-上圖是針對 With REs 與 Without REs 的 predictiong time 做一個時間上的調查。發現也沒有太大的區別。
+上圖是針對 With REs 與 Without REs 的 predicting time 做一個時間上的調查。發現也沒有太大的區別。
 
 綜合以上的實驗總結出以下幾點 : 
 
