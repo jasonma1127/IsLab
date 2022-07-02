@@ -23,7 +23,7 @@ Training time: 8.408792495727539 s
 
 Predicting time: 0.20657944679260254 s
 
-<font color = "red">Accuracy : 1.0</font>
+> Accuracy : 1.0
 
 ## Without Remove Edges
 
@@ -40,7 +40,7 @@ Training time: 8.21454930305481 s
 
 Predicting time: 0.1782376766204834 s
 
-<font color = "red">Accuracy : 1.0</font>
+> Accuracy : 1.0
 
 
 
