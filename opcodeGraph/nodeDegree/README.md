@@ -23,7 +23,7 @@ Training time: 0.3736226558685303 s
 
 Predicting time: 0.012392044067382812 s
 
-Accuracy : 1.0
+> Accuracy : 1.0
 
 ## without Remove Edges ##
 
@@ -40,7 +40,51 @@ Training time: 0.2985117435455322 s
 
 Predicting time: 0.012912511825561523 s
 
-Accuracy : 1.0
+> Accuracy : 1.0
+
+---
+
+# Dataset
+
+- CPU arch : armel
+- Malware : 5000 (Mirai, Bashlite, unknown, Android, Tsunami, Dofloo, Hajime, Xorddos, Pnscan)
+- Benign : 5000
+
+feature shape : 1346
+
+## With Remove Edges
+
+- xData shape : (10000, 1346)
+- yLabel shape : (10000,)
+
+- X_train shape : (8000, 1346)
+- y_train shape : (8000,)
+
+- X_test shape : (2000, 1346)
+- y_test shape : (2000,)
+
+Training time: 1.1084108352661133 s
+
+Predicting time: 0.029042720794677734 s
+
+> Accuracy : 1.0
+
+## Without Remove Edges
+
+- xData shape : (10000, 1346)
+- yLabel shape : (10000,)
+
+- X_train shape : (8000, 1346)
+- y_train shape : (8000,)
+
+- X_test shape : (2000, 1346)
+- y_test shape : (2000,)
+
+Training time: 1.4482789039611816 s
+
+Predicting time: 0.027620553970336914 s
+
+> Accuracy : 1.0
 
 ---
 
