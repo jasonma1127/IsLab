@@ -6,7 +6,7 @@
 - Malware : 43298 (Mirai, Bashlite, unknown, Android, Tsunami, Dofloo, Hajime, Xorddos, Pnscan)
 - Benign : 32913
 
-feature shape : 1288
+feature shape : 2005
 
 ## With Remove Edges
 
