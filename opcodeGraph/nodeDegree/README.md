@@ -2,7 +2,9 @@
 
 ![image](https://user-images.githubusercontent.com/33441316/177007611-7b2f259c-4622-4209-a6f8-a24bcdaf7cd0.png)
 
-以下為 76211 比數為例 : 
+![image](https://user-images.githubusercontent.com/33441316/177007886-4abecde6-fa89-4944-abd8-d5496edacbde.png)
+
+以下為 76211 (M : 43298, B : 32913)筆數為例 : 
 
 - COG_time: 01:57:13
 - REs_time: 01:02:20
