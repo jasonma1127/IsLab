@@ -10,36 +10,36 @@ feature shape : 987
 
 ## with Remove Edges ##
 
-xData shape : (2000, 987)
-yLabel shape : (2000,)
+- xData shape : (2000, 987)
+- yLabel shape : (2000,)
 
-X_train shape : (1600, 987)
-y_train shape : (1600,)
+- X_train shape : (1600, 987)
+- y_train shape : (1600,)
 
-X_test shape : (400, 987)
-y_test shape : (400,)
+- X_test shape : (400, 987)
+- y_test shape : (400,)
 
 Training time: 0.3736226558685303 s
 
-
 Predicting time: 0.012392044067382812 s
+
 Accuracy : 1.0
 
 ## without Remove Edges ##
 
-xData shape : (2000, 987)
-yLabel shape : (2000,)
+- xData shape : (2000, 987)
+- yLabel shape : (2000,)
 
-X_train shape : (1600, 987)
-y_train shape : (1600,)
+- X_train shape : (1600, 987)
+- y_train shape : (1600,)
 
-X_test shape : (400, 987)
-y_test shape : (400,)
+- X_test shape : (400, 987)
+- y_test shape : (400,)
 
 Training time: 0.2985117435455322 s
 
-
 Predicting time: 0.012912511825561523 s
+
 Accuracy : 1.0
 
 ---
