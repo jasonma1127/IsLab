@@ -91,6 +91,50 @@ Predicting time: 0.027620553970336914 s
 # Dataset
 
 - CPU arch : armel
+- Malware : 10000 (Mirai, Bashlite, unknown, Android, Tsunami, Dofloo, Hajime, Xorddos, Pnscan)
+- Benign : 10000
+
+feature shape : 1483
+
+## With Remove Edges
+
+- xData shape : (20000, 1483)
+- yLabel shape : (20000,)
+
+- X_train shape : (16000, 1483)
+- y_train shape : (16000,)
+
+- X_test shape : (4000, 1483)
+- y_test shape : (4000,)
+
+Training time: 2.5792829990386963 s
+
+Predicting time: 0.12560009956359863 s
+
+> Accuracy : 1.0
+
+## Without Remove Edges
+
+- xData shape : (20000, 1483)
+- yLabel shape : (20000,)
+
+- X_train shape : (16000, 1483)
+- y_train shape : (16000,)
+
+- X_test shape : (4000, 1483)
+- y_test shape : (4000,)
+
+Training time: 2.2786951065063477 s
+
+Predicting time: 0.0482635498046875 s
+
+> Accuracy : 1.0
+
+---
+
+# Dataset
+
+- CPU arch : armel
 - Malware : 43298 (Mirai, Bashlite, unknown, Android, Tsunami, Dofloo, Hajime, Xorddos, Pnscan)
 - Benign : 32913
 
