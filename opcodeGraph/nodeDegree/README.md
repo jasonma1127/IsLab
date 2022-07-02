@@ -174,6 +174,7 @@ Predicting time: 0.1782376766204834 s
 
 > Accuracy : 1.0
 
+![image](https://user-images.githubusercontent.com/33441316/177001604-1c4a0e3a-0a15-4a8f-939d-6ca67b22a6fb.png)
 
 
 
