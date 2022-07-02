@@ -8,39 +8,39 @@
 
 feature shape : 1288
 
-## with Remove Edges ##
+## With Remove Edges
 
-xData shape : (76211, 2005)
-yLabel shape : (76211,)
+- xData shape : (76211, 2005)
+- yLabel shape : (76211,)
 
-X_train shape : (60968, 2005)
-y_train shape : (60968,)
+- X_train shape : (60968, 2005)
+- y_train shape : (60968,)
 
-X_test shape : (15243, 2005)
-y_test shape : (15243,)
+- X_test shape : (15243, 2005)
+- y_test shape : (15243,)
 
 Training time: 8.408792495727539 s
 
-
 Predicting time: 0.20657944679260254 s
-Accuracy : 1.0
 
-## without Remove Edges ##
+<font color = "red">Accuracy : 1.0</font>
 
-xData shape : (76211, 2005)
-yLabel shape : (76211,)
+## Without Remove Edges
 
-X_train shape : (60968, 2005)
-y_train shape : (60968,)
+- xData shape : (76211, 2005)
+- yLabel shape : (76211,)
 
-X_test shape : (15243, 2005)
-y_test shape : (15243,)
+- X_train shape : (60968, 2005)
+- y_train shape : (60968,)
+
+- X_test shape : (15243, 2005)
+- y_test shape : (15243,)
 
 Training time: 8.21454930305481 s
 
-
 Predicting time: 0.1782376766204834 s
-Accuracy : 1.0
+
+<font color = "red">Accuracy : 1.0</font>
 
 
 
