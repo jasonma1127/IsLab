@@ -4,13 +4,24 @@
 
 ![image](https://user-images.githubusercontent.com/33441316/177007886-4abecde6-fa89-4944-abd8-d5496edacbde.png)
 
-以下為 76211 (M : 43298, B : 32913)筆數為例 : 
+以下為 76211 (M : 43298, B : 32913) 筆數為例 : 
+
+### With REs
 
 - COG_time: 01:57:13
 - REs_time: 01:02:20
 - CND_time: 00:00:27
 - total_time: 03:00:01
 - Feature extraction per file time: 0.1417356151425842
+
+### Without REs
+
+- COG_time: 01:50:38
+- CND_time: 00:00:40
+- total_time: 02:07:13
+- Feature extraction per file time: 0.10015881176522695
+
+### 小結
 
 - 本次實驗解決了 memory 不斷疊加的問題。
 - 發現存取 opcode graph 花費的時間遠大於建立的時間，所以索性不存圖了，直接轉成可訓練的 feature。
