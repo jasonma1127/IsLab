@@ -174,7 +174,20 @@ Predicting time: 0.1782376766204834 s
 
 > Accuracy : 1.0
 
+---
+
+![image](https://user-images.githubusercontent.com/33441316/177001731-f8d94eb4-6270-4a66-bab2-3560fa7f1af7.png)
+
+以上是四種不同的資料集數量對準確率的影響，也許都是在相同的 CPU 架構下，所以準確率都會維持在一個相當高的水準，並不會因為 malware family 變得複雜後而下降。
+
 ![image](https://user-images.githubusercontent.com/33441316/177001604-1c4a0e3a-0a15-4a8f-939d-6ca67b22a6fb.png)
+
+以上有四種不同的資料集數量對維度的影喜，隨著資料集的擴增，訓練的維度也不斷上升，而隨著維度的不斷加大，預計訓練的時間也會有些許影響。
+
+![image](https://user-images.githubusercontent.com/33441316/177001889-632d83fb-2406-4899-bd0b-49cddcd18a8b.png)
+
+上圖有針對 With REs 與 Without REs 做一個時間上的比較，
+
 
 
 
