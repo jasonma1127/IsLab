@@ -202,9 +202,11 @@ Predicting time: 0.1782376766204834 s
 
 ---
 
-![image](https://user-images.githubusercontent.com/33441316/177270105-339f9803-26bc-4ecf-8e03-0ba539cb5000.png)
+![image](https://user-images.githubusercontent.com/33441316/177270252-d8cc771b-5240-40ca-9678-a27cc28e35dd.png)
 
 以上是四種不同的資料集數量對準確率的影響，也許都是在相同的 CPU 架構下，所以準確率都會維持在一個相當高的水準，並不會因為 malware family 變得複雜後而下降。
+
+並且在 With REs 與 Without REs 分別測試下，準確率都維持在 1，也就可以證明說，With REs 並不會對準確率產生影響。
 
 ![image](https://user-images.githubusercontent.com/33441316/177001604-1c4a0e3a-0a15-4a8f-939d-6ca67b22a6fb.png)
 
