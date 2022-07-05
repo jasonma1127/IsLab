@@ -212,7 +212,7 @@ Predicting time: 0.1782376766204834 s
 
 以上有四種不同的資料集數量對維度的影喜，隨著資料集的擴增，訓練的維度也不斷上升，而隨著維度的不斷加大，預計訓練的時間也會有些許影響。
 
-![image](https://user-images.githubusercontent.com/33441316/177002145-c479ca32-f2b9-46a7-ac75-2be5a2dd9d1b.png)
+![image](https://user-images.githubusercontent.com/33441316/177316531-e6de8145-b79f-4141-968c-242f4c8216ad.png)
 
 上圖有針對 With REs 與 Without REs 做一個時間上的比較，原本想說因為 Without REs 的話，就會有許多雜訊，訓練起來的資料量比較多，應該所花費的時間就會比較多，但上圖中並沒有發現這樣的跡象，所以 REs 這個過程並不會在 training 這邊省去時間。
 
