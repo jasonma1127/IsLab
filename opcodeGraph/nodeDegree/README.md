@@ -202,7 +202,7 @@ Predicting time: 0.1782376766204834 s
 
 ---
 
-![image](https://user-images.githubusercontent.com/33441316/177001731-f8d94eb4-6270-4a66-bab2-3560fa7f1af7.png)
+![image](https://user-images.githubusercontent.com/33441316/177270105-339f9803-26bc-4ecf-8e03-0ba539cb5000.png)
 
 以上是四種不同的資料集數量對準確率的影響，也許都是在相同的 CPU 架構下，所以準確率都會維持在一個相當高的水準，並不會因為 malware family 變得複雜後而下降。
 
