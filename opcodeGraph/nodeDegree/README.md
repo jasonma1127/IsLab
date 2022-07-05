@@ -216,7 +216,7 @@ Predicting time: 0.1782376766204834 s
 
 上圖有針對 With REs 與 Without REs 做一個時間上的比較，原本想說因為 Without REs 的話，就會有許多雜訊，訓練起來的資料量比較多，應該所花費的時間就會比較多，但上圖中並沒有發現這樣的跡象，所以 REs 這個過程並不會在 training 這邊省去時間。
 
-![image](https://user-images.githubusercontent.com/33441316/177318582-55f1e0e0-a9f5-4405-b544-465db40ff3e3.png)
+![image](https://user-images.githubusercontent.com/33441316/177323902-67b9217c-be1e-4e14-9d90-50d6bdb2ea99.png)
 
 上圖是針對 With REs 與 Without REs 的 testing time 做一個時間上的調查。發現也沒有太大的區別。
 
