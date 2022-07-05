@@ -216,15 +216,15 @@ Predicting time: 0.1782376766204834 s
 
 上圖有針對 With REs 與 Without REs 做一個時間上的比較，原本想說因為 Without REs 的話，就會有許多雜訊，訓練起來的資料量比較多，應該所花費的時間就會比較多，但上圖中並沒有發現這樣的跡象，所以 REs 這個過程並不會在 training 這邊省去時間。
 
-![image](https://user-images.githubusercontent.com/33441316/177004344-77cac05c-dcff-40e5-8afd-1a1b94dfcead.png)
+![image](https://user-images.githubusercontent.com/33441316/177318582-55f1e0e0-a9f5-4405-b544-465db40ff3e3.png)
 
-上圖是針對 With REs 與 Without REs 的 predicting time 做一個時間上的調查。發現也沒有太大的區別。
+上圖是針對 With REs 與 Without REs 的 testing time 做一個時間上的調查。發現也沒有太大的區別。
 
 綜合以上的實驗總結出以下幾點 : 
 
-- With or Without REs 對於 Accuracy, training time 與 predicting time 幾乎沒有影響。
+- With or Without REs 對於 Accuracy, training time 與 testing time 幾乎沒有影響。
 - REs 並無消除雜訊，提高 Accuracy 之作用。
-- REs 在降低資訊量的同時，也沒有對 training 與 predicting 的時間縮減，甚至增加了建立 feature 的時間。
+- REs 在降低資訊量的同時，也沒有對 training 與 testing 的時間縮減，甚至增加了建立 feature 的時間。
 
 
 目前只有在單一 CPU 架構跑此實驗，計畫要跑多重架構下的情境，會不會遇到 Accuracy 下降的問題，或是維度問題，因為 opcode graph 的跨架構是目前廣為人知的挑戰之一。
