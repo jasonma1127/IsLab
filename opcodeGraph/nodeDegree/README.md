@@ -208,13 +208,19 @@ Predicting time: 0.1782376766204834 s
 
 並且在 With REs 與 Without REs 分別測試下，準確率都維持在 1，也就可以證明說，With REs 並不會對準確率產生影響。
 
+With REs and Without REs tested separately, the accuracy rate is maintained at 1, which can prove that With REs does not affect the accuracy rate.
+
 ![image](https://user-images.githubusercontent.com/33441316/177001604-1c4a0e3a-0a15-4a8f-939d-6ca67b22a6fb.png)
 
 以上有四種不同的資料集數量對維度的影喜，隨著資料集的擴增，訓練的維度也不斷上升，而隨著維度的不斷加大，預計訓練的時間也會有些許影響。
 
+With the expansion of the data set, the dimension of training continues to increase, and as the dimension continues to increase, it is expected that the training time will also have a slight impact.
+
 ![image](https://user-images.githubusercontent.com/33441316/177317332-bb8e9d29-9700-4f28-8721-72c083446262.png)
 
 上圖有針對 With REs 與 Without REs 做一個時間上的比較，原本想說因為 Without REs 的話，就會有許多雜訊，訓練起來的資料量比較多，應該所花費的時間就會比較多，但上圖中並沒有發現這樣的跡象，所以 REs 這個過程並不會在 training 這邊省去時間。
+
+To make a time comparison between With REs and Without REs, the paper believed that because of Without REs, there will be a lot of noise, and the information of the feature will br more, so it should take more time to train, but in the above chart, we don't see any sign of this situation, so the REs does not save time on the training process.
 
 ![image](https://user-images.githubusercontent.com/33441316/177323902-67b9217c-be1e-4e14-9d90-50d6bdb2ea99.png)
 
