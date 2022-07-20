@@ -127,3 +127,11 @@ Training time: 15.849522113800049 s
 Predicting time: 3.3586983680725098 s
 
 Accuracy : 1.0
+
+--- 
+# 結論
+
+看起來同時在 multiple family 與 multiple CPUArch 的情況下，此方法的 detection accuracy rate 的表現都是非常好的!
+
+- 所以在目前的 dataset 中，With REs 與 Without REs 是沒有差異的，因為此篇的方法是實作在 PE 的資料集上，所以可能存在 dataset 本身的複雜性的不同。
+- 因為此 dataset 中的 malware 都是 botnet 類型的，所以推測在 opcode 的數量上面就有很大的差異，
