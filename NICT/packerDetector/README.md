@@ -1,6 +1,6 @@
 # Packer Detector
 
-## How To Use
+## How To Use?
 
 `python3 packerDetector.py /data/total_entropy_with_section.json`
 
