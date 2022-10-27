@@ -38,6 +38,6 @@ make -jN
 make install
 ```
 
-<path> :  Where RetDec will be installed
+\<path> :  Where RetDec will be installed
 
 N : The number of processes to use for parallel build
