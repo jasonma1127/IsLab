@@ -26,3 +26,17 @@ cd DIE-engine
 bash -x build_dpkg.sh
 sudo dpkg -i release/die_*.deb
 ```
+
+# Retdec
+
+```
+git clone https://github.com/avast/retdec
+cd retdec
+mkdir build && cd build
+cmake .. -DCMAKE_INSTALL_PREFIX=<path>
+make -jN
+make install
+```
+
+<path> :  Where RetDec will be installed
+N : The number of processes to use for parallel build
