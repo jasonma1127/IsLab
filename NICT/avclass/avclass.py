@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import sys
 from tqdm import tqdm
 
 def readJson(path: str) -> dict:
@@ -51,12 +52,20 @@ def analysis_avclass_output(filename:str , path: str) -> dict:
 
 if __name__ == "__main__":
 
+    # argv
+    n = len(sys.argv) - 1
+    if n != 1:
+        print("[x] Please enter data file.")
+        sys.exit()
+
+    dataPath = sys.argv[1]
+
     total_avclass = dict()
 
-    for d in tqdm(sorted(os.listdir("/data/Results")), desc = "All"):
+    for d in tqdm(sorted(os.listdir(dataPath)), desc = "All"):
         if len(d) == 2:
-            for f in tqdm(os.listdir("/data/Results/" + d), desc = d):
-                data = readJson("/data/Results/" + d + "/" + f)
+            for f in tqdm(os.listdir(dataPath + d), desc = d):
+                data = readJson(dataPath + d + "/" + f)
                 store_new_result(data)
                 # perform avclass
                 os.system("~/avclass/avclass2/avclass2_labeler.py -vt ./fixed.json -p > /dev/null 2>&1 > avclassOutput.txt")
