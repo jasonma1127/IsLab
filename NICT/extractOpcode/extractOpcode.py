@@ -4,7 +4,7 @@ import pickle
 def createTempFile(temp: str):
     if not os.path.exists(temp):
         try:
-            os.system("sudo mkdir " + temp)
+            os.system("mkdir " + temp)
             print("[o] CreateTempFile Successfully")
         except:
             print("[x] CreateTempFile Failed")
@@ -24,16 +24,20 @@ def analyzeDSM(file: str) -> list:
     return opcodeSequence
 
 def extractOpcode(srcPath: str, dstPath: str, fileName: str):
+    
+    # Check if pickle file already exists
+    if os.path.isfile(os.path.join(dstPath, fileName) + ".pickle"):
+        return
 
     # Create dsmTemp
     createTempFile("dsmTemp")
 
     # copy target file to dsmTemp
     tgtFilePath = os.path.join(srcPath, fileName)
-    os.system("sudo cp " + tgtFilePath + " dsmTemp/temp")
+    os.system("cp " + tgtFilePath + " dsmTemp/temp")
     
     # decompiler target file
-    os.system("sudo retdec-decompiler dsmTemp/temp > /dev/null 2>&1")
+    os.system("retdec-decompiler dsmTemp/temp > /dev/null 2>&1")
 
     opcodeSequence = analyzeDSM("dsmTemp/temp.dsm")
 

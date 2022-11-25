@@ -13,7 +13,6 @@ if __name__ == "__main__":
 
     parser = get_parser()
     args = parser.parse_args()
-    # extractOpcode(args.input, args.output, "mal00ffff")
 
     for file in tqdm(os.listdir(args.input), desc = "Extract Features"):
         extractOpcode(args.input, args.output, file)
