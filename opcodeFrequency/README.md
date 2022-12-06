@@ -33,8 +33,8 @@
 
 ![unpacked_feature](./image/unpacked_feature.jpg)
 
-- begin packed: 5230
-- malware packed: 5098
+- begin unpacked: 5230
+- malware unpacked: 5098
 - <font color="red">feature shape: 3978 (It means there are 5538 different opcodes int the dataset)</font>
 ---
 - xData shape: (10328, 3978)
