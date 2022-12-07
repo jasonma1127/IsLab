@@ -18,6 +18,10 @@ Create a symbolic link for retdec-decompiler in bin.
 
 ![extractFeature_help](./image/extractFeature_help.jpg)
 
+### Extract Opcode sequence using Retdec
 
+`python3 extractFeature.py -t retdec -i <path/to/source> -o <path/to/destination>`
 
-`python3 extractFeature.py -i <path/to/source> -o <path/to/destination>`
+### Extract Opcode sequence using Radare2
+
+`python3 extractFeature.py -t radare2 -i <path/to/source> -o <path/to/destination>`
