@@ -18,7 +18,7 @@
 
 - begin packed: 5230
 - malware packed: 5098
-- <font color="red">feature shape: 5558 (It means there are 5538 different opcodes int the dataset)</font>
+- <font color="red">feature shape: 5558 (It means there are 5558 different opcodes int the dataset)</font>
 ---
 - xData shape: (10328, 5558)
 - yLabel shape: (10328,)
