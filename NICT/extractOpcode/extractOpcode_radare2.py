@@ -23,7 +23,7 @@ def extractOpcode_radare2(srcPath: str, dstPath: str, fileName: str):
 
     # analyze sample
     targetPath = os.path.join(srcPath, fileName)
-    r = r2pipe.open("/bin/ls", flags=['-2'])
+    r = r2pipe.open(targetPath, flags=['-2'])
     r.cmd("aaaa")
     dsm = r.cmd("pda")
 
