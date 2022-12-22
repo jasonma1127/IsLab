@@ -134,6 +134,9 @@ if __name__ == "__main__":
     # collect all the opcode in the dataset including packed and unpacked
     print("[+] Create Unique Opcode Dict")
     opcodeDict = createOpcodeDict(args.benign, args.malware)
+    
+    with open('opcodeDict.pickle', 'wb') as f:
+        pickle.dump(opcodeDict, f)
 
     global totalFeature
     totalFeature = []
