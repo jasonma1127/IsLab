@@ -64,11 +64,12 @@
 
 ### Question 3: Does the informations provide by packed samples belong to the sample itself?
 
-- Unconfirmed, there is huge difference between those two feature shape, packed sample dataset provide 5558 different opcodes while unpacked sample dataset only provide 3978 different opcodes.
-- That's means there are 1580 opcodes that doesn't appear in unpacked samples which sounds weird.
+1. Compare the lengths of packed samples and unpacked samples.
+    - [Benign] 698 of the unpacked samples are longer than packed samples.
+    - [Benign] 138 of the packed samples are longer than unpacked samples.
+    - [Benign] 4347 of the unpacked samples as long as packed samples, but none of them are the same.
+    - [Malware] 3836 of the unpacked samples are longer than packed samples.
+    - [Malware] 54 of the packed samples are longer than unpacked samples.
+    - [Malware] 1207 of the unpacked samples as long as packed samples, but none of them are same.
 
 # Problem
-
-- There are too many opcodes in the feature, it could contains non-opcode information in it.
-- Try to undersand how retdec extract opcode, because it may unpack the sample before extracting opcode.
-- Try to find out why the packed samples still can achieve good performance.
