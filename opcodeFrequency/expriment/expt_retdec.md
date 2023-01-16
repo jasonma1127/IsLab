@@ -23,7 +23,7 @@
 
 - begin unpacked: 5230
 - malware unpacked: 5098
-- <font color="red">feature shape: 3978 (It means there are 5538 different opcodes int the dataset)</font>
+- <font color="red">feature shape: 3978 (It means there are 3978 different opcodes int the dataset)</font>
 ---
 - xData shape: (10328, 3978)
 - yLabel shape: (10328,)
@@ -67,8 +67,46 @@
 - Unconfirmed, there is huge difference between those two feature shape, packed sample dataset provide 5558 different opcodes while unpacked sample dataset only provide 3978 different opcodes.
 - That's means there are 1580 opcodes that doesn't appear in unpacked samples which sounds weird.
 
+# Feature Investigation
+
+According to the avast development team, retdec tried to unpack during reverse engineering. [ref](https://github.com/avast/retdec/issues/1128)
+
+They explained the three situations in my experiment:
+
+- **len(unpacked sample OPS) > len(packed samples OPS)**
+    - Indicates that the unpacking failed during the reverse process.
+    - As a result, there are many compressed data in the packed sample that cannot be parsed into opcode.
+- **len(packed sample OPS) > len(unpacked sample OPS)**
+    - Indicates that the unpacking failed during the reverse process.
+    - Although there are a lot of compressed data in the packed sample, the reverse engineer overdecodes them into opcodes, which are likely to be garbage opcodes.
+- **len(packed sample OPS) == len(unpacked sample OPS)**
+    - Indicates that the unpacking was successful during the reverse process.
+    - Successful unpacking means the samples are the same, so the OPS will be the same.
+
+## OPS comparison of malware vs benign
+
+### Benign
+
+![OPS_benign](../image/OPS_benign.jpg)
+
+- **Total 1267 sample** len(unpacked sample OPS) > len(packed sample OPS)
+- **Total 274 sample** len(packed sample OPS) > len(unpacked sample OPS)
+- **Total 3689 sample** len(unpacked sample OPS) == len(packed sample OPS)，totally EQUAL.
+
+### Malware
+
+![OPS_malware](../image/OPS_malware.jpg)
+
+- **Total 1194 sample** len(unpacked sample OPS) > len(packed sample OPS)
+- **Total 1057 sample** len(packed sample OPS) > len(unpacked sample OPS)
+- **Total 2828 sample** len(unpacked sample OPS) == len(packed sample OPS)，totally EQUAL.
+
+### Total Comparison
+
+![OPS_comparison](../image/OPS_comparison.jpg)
+
+- Generally speaking, benign samples has higher unpacking successful rate during reverse than malware samples.
+
 # Problem
 
-- There are too many opcodes in the feature, it could contains non-opcode information in it.
-- Try to undersand how retdec extract opcode, because it may unpack the sample before extracting opcode.
-- Try to find out why the packed samples still can achieve good performance.
+- 
