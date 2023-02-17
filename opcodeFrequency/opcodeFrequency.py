@@ -123,7 +123,6 @@ def get_parser():
     parser = argparse.ArgumentParser(description = "Extract Features")
     parser.add_argument("-b", "--benign", type = str, help = "Enter source path for benign")
     parser.add_argument("-m", "--malware", type = str, help = "Enter source path for malware")
-    # parser.add_argument("-o", "--output", type = str, help = "Enter destination path")
     return parser
 
 if __name__ == "__main__":
