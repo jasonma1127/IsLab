@@ -161,6 +161,8 @@ if __name__ == "__main__":
     X_train, X_test, y_train, y_test = train_and_predict(benignAmount, malwareAmount)
 
     for depth in [2, 3, 5, 10, 15, 30, 50, 100, 1000]:
+        print()
+        print("【Depth】", depth)
         RandomForestModel(depth, X_train, y_train, "./model/opcodeFrequency_RF_" + str(depth))
 
         model = joblib.load("./model/opcodeFrequency_RF_" + str(depth))
