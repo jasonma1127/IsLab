@@ -62,8 +62,8 @@ def train_and_predict(benignAmount: int, malwareAmount: int) -> Union[pd.DataFra
     
     # Create label
     # Given benign and malware amount to create y_label 
-    benign_label = np.ones(benignAmount)
-    malware_label = np.zeros(malwareAmount)
+    benign_label = np.zeros(benignAmount)
+    malware_label = np.ones(malwareAmount)
  
     yLabel = np.append(benign_label, malware_label)
 
