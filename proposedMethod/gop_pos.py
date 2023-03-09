@@ -48,23 +48,24 @@ def split_target_test_set(ratio: float, benign_packed: str, malware_packed: str)
 def features(sentence, index):
     """ sentence: [w1, w2, ...], index: the index of the word """
     return {
-        'word': sentence[index],
-        'is_first': index == 0,
-        'is_last': index == len(sentence) - 1,
-        'is_capitalized': sentence[index][0].upper() == sentence[index][0],
-        'is_all_caps': sentence[index].upper() == sentence[index],
-        'is_all_lower': sentence[index].lower() == sentence[index],
-        'prefix-1': sentence[index][0],
-        'prefix-2': sentence[index][:2],
-        'prefix-3': sentence[index][:3],
-        'suffix-1': sentence[index][-1],
-        'suffix-2': sentence[index][-2:],
-        'suffix-3': sentence[index][-3:],
-        'prev_word': '' if index == 0 else sentence[index - 1],
-        'next_word': '' if index == len(sentence) - 1 else sentence[index + 1],
-        'has_hyphen': '-' in sentence[index],
-        'is_numeric': sentence[index].isdigit(),
-        'capitals_inside': sentence[index][1:].lower() != sentence[index][1:]
+        # 'word': sentence[index],
+        'length': len(sentence[index]),
+        # 'is_first': index == 0,
+        # 'is_last': index == len(sentence) - 1,
+        # 'is_capitalized': sentence[index][0].upper() == sentence[index][0],
+        # 'is_all_caps': sentence[index].upper() == sentence[index],
+        # 'is_all_lower': sentence[index].lower() == sentence[index],
+        # 'prefix-1': sentence[index][0],
+        # 'prefix-2': sentence[index][:2],
+        # 'prefix-3': sentence[index][:3],
+        # 'suffix-1': sentence[index][-1],
+        # 'suffix-2': sentence[index][-2:],
+        # 'suffix-3': sentence[index][-3:],
+        # 'prev_word': '' if index == 0 else sentence[index - 1],
+        # 'next_word': '' if index == len(sentence) - 1 else sentence[index + 1],
+        # 'has_hyphen': '.' in sentence[index],
+        # 'is_numeric': sentence[index].isdigit(),
+        # 'capitals_inside': sentence[index][1:].lower() != sentence[index][1:]
     }
 
 def label_opcode(sample: pickle, oriset: set) -> list:
@@ -73,8 +74,10 @@ def label_opcode(sample: pickle, oriset: set) -> list:
 
     for opcode in sample:
         if opcode in oriset:
+            # real opcode is 0
             opcode_label.append(0)
         else:
+            # garbage opcode is 1
             opcode_label.append(1)
     
     return opcode_label
@@ -127,24 +130,69 @@ if __name__ == "__main__":
 
     train_set, test_set, train_label, test_label = split_target_test_set(args.reference_ratio, benign_packed, malware_packed)
 
-    X, y = transform_to_dataset(train_set, train_label, benign_packed, malware_packed, benign_orig, malware_orig)
+    X, y = transform_to_dataset(train_set[2010:2025], train_label[2010:2025], benign_packed, malware_packed, benign_orig, malware_orig)
+
+    print("y")
+    print(len(y))
+    print("garbage opcode:", sum(y))
+    print("real opcode:", len(y) - sum(y))
+    print("real opcode rate:", (len(y) - sum(y))/len(y))
+    print()
+
+    # y_range_low = 116528
+    # y_range_high = 299376
+    # print("y[:]")
+    # print(len(y[y_range_low:y_range_high]))
+    # print("real opcode:", sum(y[y_range_low:y_range_high]))
+    # print("garbage opcode:", len(y[y_range_low:y_range_high]) - sum(y[y_range_low:y_range_high]))
+    # print()
 
     from sklearn.tree import DecisionTreeClassifier
+    from sklearn.ensemble import RandomForestClassifier
     from sklearn.feature_extraction import DictVectorizer
     from sklearn.pipeline import Pipeline
     
     clf = Pipeline([
         ('vectorizer', DictVectorizer(sparse=False)),
-        ('classifier', DecisionTreeClassifier(criterion='entropy'))
+        # ('classifier', DecisionTreeClassifier(criterion='entropy'))
+        ('classifier', RandomForestClassifier(max_depth = 1000, random_state = 0))
     ])
 
-    clf.fit(X[:5000], y[:5000])
+    print("Training...")
+
+    clf.fit(X, y)
 
     print("Training completed")
 
     X.clear()
     y.clear()
+    del X
+    del y
  
-    X_test, y_test = transform_to_dataset(test_set, test_label, benign_packed, malware_packed, benign_orig, malware_orig)
+    X_test, y_test = transform_to_dataset(test_set[700:705], test_label[700:705], benign_packed, malware_packed, benign_orig, malware_orig)
     
+    print("y_test")
+    print(len(y_test))
+    print("garbage opcode:", sum(y_test))
+    print("real opcode:", len(y_test) - sum(y_test))
+    print("real opcode rate:", (len(y_test) - sum(y_test))/len(y_test))
+    print()
+
+    # y_test_range_low = 506528
+    # y_test_range_high = 719376
+    # print("y_test[:]")
+    # print(len(y_test[y_test_range_low:y_test_range_high]))
+    # print("real opcode:", sum(y_test[y_test_range_low:y_test_range_high]))
+    # print("garbage opcode:", len(y_test[y_test_range_low:y_test_range_high]) - sum(y_test[y_test_range_low:y_test_range_high]))
+    # print()
+
     print("Accuracy:", clf.score(X_test, y_test))
+
+    predict = clf.predict(X_test)
+
+    from sklearn.metrics import confusion_matrix
+    tn, fp, fn, tp = confusion_matrix(y_test, predict).ravel()
+    print("實際 GP, 預測 GP:", tp)
+    print("實際 RP, 預測 RP:", tn)
+    print("實際 GP, 預測 RP:", fn)
+    print("實際 RP, 預測 GP:", fp)
