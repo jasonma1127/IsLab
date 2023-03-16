@@ -120,7 +120,7 @@ def Predict(X_test: pd.DataFrame, y_test: pd.DataFrame, model: object) -> None:
     print()
 
 def get_parser():
-    parser = argparse.ArgumentParser(description = "Extract Features")
+    parser = argparse.ArgumentParser(description = "OpcodeFrequency")
     parser.add_argument("-b", "--benign", type = str, help = "Enter source path for benign")
     parser.add_argument("-m", "--malware", type = str, help = "Enter source path for malware")
     return parser
