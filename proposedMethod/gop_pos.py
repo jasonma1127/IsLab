@@ -4,6 +4,8 @@ from tqdm import tqdm
 import numpy as np
 import argparse
 from sklearn.model_selection import train_test_split
+import time
+import joblib
 
 def loadPickle(file_path: str) -> pickle:
     with open(file_path, "rb") as f:
@@ -113,9 +115,8 @@ def transform_to_dataset(sample_list: list, label_list: list, benign_packed: str
     return X, y
 
 def get_parser():
-    parser = argparse.ArgumentParser(description = "Garbage Opcode Removal")
+    parser = argparse.ArgumentParser(description = "【Garbage Opcode Detector】- NLP POS")
     parser.add_argument("-r", "--reference_ratio", type = str, help = "Enter reference ratio")
-    parser.add_argument("-n", "--neighbor", type = str, help = "Enter neighbor amount")
     return parser
 
 if __name__ == "__main__":
@@ -125,27 +126,20 @@ if __name__ == "__main__":
 
     benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_UFwR/"
     malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_UFwR/"
+    # benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_pos/"
+    # malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_pos/"
     benign_orig = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/toy_benign_unpacked/"
     malware_orig = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/toy_malware_unpacked/"
 
     train_set, test_set, train_label, test_label = split_target_test_set(args.reference_ratio, benign_packed, malware_packed)
 
-    X, y = transform_to_dataset(train_set[2010:2025], train_label[2010:2025], benign_packed, malware_packed, benign_orig, malware_orig)
+    X, y = transform_to_dataset(train_set, train_label, benign_packed, malware_packed, benign_orig, malware_orig)
 
-    print("y")
-    print(len(y))
+    print("Total train opcode:", len(y))
     print("garbage opcode:", sum(y))
     print("real opcode:", len(y) - sum(y))
     print("real opcode rate:", (len(y) - sum(y))/len(y))
     print()
-
-    # y_range_low = 116528
-    # y_range_high = 299376
-    # print("y[:]")
-    # print(len(y[y_range_low:y_range_high]))
-    # print("real opcode:", sum(y[y_range_low:y_range_high]))
-    # print("garbage opcode:", len(y[y_range_low:y_range_high]) - sum(y[y_range_low:y_range_high]))
-    # print()
 
     from sklearn.tree import DecisionTreeClassifier
     from sklearn.ensemble import RandomForestClassifier
@@ -159,32 +153,28 @@ if __name__ == "__main__":
     ])
 
     print("Training...")
-
+    start = time.time()
     clf.fit(X, y)
-
+    end = time.time()
+    difference = end-start
+    # joblib.dump(clf, "./model/nlp_pos_model.joblib")
+    joblib.dump(clf, "./model/nlp_pos_all_model.joblib")
     print("Training completed")
+    print("Time taken in seconds: ", difference)
+    print()
 
     X.clear()
     y.clear()
     del X
     del y
  
-    X_test, y_test = transform_to_dataset(test_set[700:705], test_label[700:705], benign_packed, malware_packed, benign_orig, malware_orig)
+    X_test, y_test = transform_to_dataset(test_set, test_label, benign_packed, malware_packed, benign_orig, malware_orig)
     
-    print("y_test")
-    print(len(y_test))
+    print("Total test opcode:", len(y_test))
     print("garbage opcode:", sum(y_test))
     print("real opcode:", len(y_test) - sum(y_test))
     print("real opcode rate:", (len(y_test) - sum(y_test))/len(y_test))
     print()
-
-    # y_test_range_low = 506528
-    # y_test_range_high = 719376
-    # print("y_test[:]")
-    # print(len(y_test[y_test_range_low:y_test_range_high]))
-    # print("real opcode:", sum(y_test[y_test_range_low:y_test_range_high]))
-    # print("garbage opcode:", len(y_test[y_test_range_low:y_test_range_high]) - sum(y_test[y_test_range_low:y_test_range_high]))
-    # print()
 
     print("Accuracy:", clf.score(X_test, y_test))
 
