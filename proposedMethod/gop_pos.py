@@ -50,24 +50,24 @@ def split_target_test_set(ratio: float, benign_packed: str, malware_packed: str)
 def features(sentence, index):
     """ sentence: [w1, w2, ...], index: the index of the word """
     return {
-        # 'word': sentence[index],
+        'word': sentence[index],
         'length': len(sentence[index]),
-        # 'is_first': index == 0,
-        # 'is_last': index == len(sentence) - 1,
-        # 'is_capitalized': sentence[index][0].upper() == sentence[index][0],
-        # 'is_all_caps': sentence[index].upper() == sentence[index],
-        # 'is_all_lower': sentence[index].lower() == sentence[index],
-        # 'prefix-1': sentence[index][0],
-        # 'prefix-2': sentence[index][:2],
-        # 'prefix-3': sentence[index][:3],
-        # 'suffix-1': sentence[index][-1],
-        # 'suffix-2': sentence[index][-2:],
-        # 'suffix-3': sentence[index][-3:],
-        # 'prev_word': '' if index == 0 else sentence[index - 1],
-        # 'next_word': '' if index == len(sentence) - 1 else sentence[index + 1],
-        # 'has_hyphen': '.' in sentence[index],
-        # 'is_numeric': sentence[index].isdigit(),
-        # 'capitals_inside': sentence[index][1:].lower() != sentence[index][1:]
+        'is_first': index == 0,
+        'is_last': index == len(sentence) - 1,
+        'is_capitalized': sentence[index][0].upper() == sentence[index][0],
+        'is_all_caps': sentence[index].upper() == sentence[index],
+        'is_all_lower': sentence[index].lower() == sentence[index],
+        'prefix-1': sentence[index][0],
+        'prefix-2': sentence[index][:2],
+        'prefix-3': sentence[index][:3],
+        'suffix-1': sentence[index][-1],
+        'suffix-2': sentence[index][-2:],
+        'suffix-3': sentence[index][-3:],
+        'prev_word': '' if index == 0 else sentence[index - 1],
+        'next_word': '' if index == len(sentence) - 1 else sentence[index + 1],
+        'has_hyphen': '.' in sentence[index],
+        'is_numeric': sentence[index].isdigit(),
+        'capitals_inside': sentence[index][1:].lower() != sentence[index][1:]
     }
 
 def label_opcode(sample: pickle, oriset: set) -> list:
@@ -133,12 +133,12 @@ if __name__ == "__main__":
 
     train_set, test_set, train_label, test_label = split_target_test_set(args.reference_ratio, benign_packed, malware_packed)
 
-    X, y = transform_to_dataset(train_set, train_label, benign_packed, malware_packed, benign_orig, malware_orig)
+    X_train, y_train = transform_to_dataset(train_set, train_label, benign_packed, malware_packed, benign_orig, malware_orig)
 
-    print("Total train opcode:", len(y))
-    print("garbage opcode:", sum(y))
-    print("real opcode:", len(y) - sum(y))
-    print("real opcode rate:", (len(y) - sum(y))/len(y))
+    print("Total train opcode:", len(y_train))
+    print("garbage opcode:", sum(y_train))
+    print("real opcode:", len(y_train) - sum(y_train))
+    print("real opcode rate:", (len(y_train) - sum(y_train))/len(y_train))
     print()
 
     from sklearn.tree import DecisionTreeClassifier
@@ -154,19 +154,20 @@ if __name__ == "__main__":
 
     print("Training...")
     start = time.time()
-    clf.fit(X, y)
+    clf.fit(X_train, y_train)
     end = time.time()
     difference = end-start
     # joblib.dump(clf, "./model/nlp_pos_model.joblib")
     joblib.dump(clf, "./model/nlp_pos_all_model.joblib")
     print("Training completed")
     print("Time taken in seconds: ", difference)
+    print("Training Accuracy:", clf.score(X_train, y_train))
     print()
 
-    X.clear()
-    y.clear()
-    del X
-    del y
+    X_train.clear()
+    y_train.clear()
+    del X_train
+    del y_train
  
     X_test, y_test = transform_to_dataset(test_set, test_label, benign_packed, malware_packed, benign_orig, malware_orig)
     
@@ -176,7 +177,7 @@ if __name__ == "__main__":
     print("real opcode rate:", (len(y_test) - sum(y_test))/len(y_test))
     print()
 
-    print("Accuracy:", clf.score(X_test, y_test))
+    print("Testing Accuracy:", clf.score(X_test, y_test))
 
     predict = clf.predict(X_test)
 
