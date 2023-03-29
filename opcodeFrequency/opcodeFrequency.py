@@ -58,7 +58,7 @@ def extractOpcodeFrequency(opcodeDict: dict, samplePath: str) -> None:
         frequencyTime = end - start
         totalFeature.append([filename, frequencyTime, list(opcodeDict.values())])
 
-def train_and_predict(benignAmount: int, malwareAmount: int) -> Union[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+def train_and_predict(benignAmount: int, malwareAmount: int, train_ratio: float) -> Union[pd.DataFrame, pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     
     # Create label
     # Given benign and malware amount to create y_label 
@@ -71,7 +71,7 @@ def train_and_predict(benignAmount: int, malwareAmount: int) -> Union[pd.DataFra
     
     # Prepare train test data
     from sklearn.model_selection import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(xData, yLabel, test_size = 0.2, random_state = 42)
+    X_train, X_test, y_train, y_test = train_test_split(xData, yLabel, train_size = float(train_ratio), random_state = 42)
 
     print("xData shape :", xData.shape)
     print("yLabel shape :", yLabel.shape)
@@ -123,6 +123,7 @@ def get_parser():
     parser = argparse.ArgumentParser(description = "OpcodeFrequency")
     parser.add_argument("-b", "--benign", type = str, help = "Enter source path for benign")
     parser.add_argument("-m", "--malware", type = str, help = "Enter source path for malware")
+    parser.add_argument("-r", "--train_ratio", type = str, help = "Enter train ratio")
     return parser
 
 if __name__ == "__main__":
@@ -158,7 +159,7 @@ if __name__ == "__main__":
     totalFeatureDf.to_csv("totalFeatureDf.csv", index = False)
 
     # Train & Predict
-    X_train, X_test, y_train, y_test = train_and_predict(benignAmount, malwareAmount)
+    X_train, X_test, y_train, y_test = train_and_predict(benignAmount, malwareAmount, args.train_ratio)
 
     for depth in [2, 3, 5, 10, 15, 30, 50, 100, 1000]:
         print()
