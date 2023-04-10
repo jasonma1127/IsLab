@@ -51,13 +51,13 @@ def split_target_reference_set(ratio: float, benign_packed: str, malware_packed:
 
 def find_garbage_opcode(sample: pickle, oriset: set) -> list:
     
-    garbage_opcode = []
+    garbage_opcode = set()
 
     for opcode in sample:
         if opcode not in oriset:
-            garbage_opcode.append(opcode)
+            garbage_opcode.add(opcode)
     
-    return garbage_opcode
+    return list(garbage_opcode)
 
 def create_garbage_opcode_dict(reference_set, reference_label, benign_packed, malware_packed, benign_orig, malware_orig) -> set:
 
@@ -71,7 +71,7 @@ def create_garbage_opcode_dict(reference_set, reference_label, benign_packed, ma
 
             ori_opcode_set = set(sample_orig_op)
 
-            garbage_opcode_dict += find_garbage_opcode(sample_packed_op, ori_opcode_set)
+            garbage_opcode_dict.append(find_garbage_opcode(sample_packed_op, ori_opcode_set))
         
         # malware
         elif reference_label[i] == 1:
@@ -80,9 +80,9 @@ def create_garbage_opcode_dict(reference_set, reference_label, benign_packed, ma
 
             ori_opcode_set = set(sample_orig_op)
 
-            garbage_opcode_dict += find_garbage_opcode(sample_packed_op, ori_opcode_set)
-
-    return set(garbage_opcode_dict)
+            garbage_opcode_dict.append(find_garbage_opcode(sample_packed_op, ori_opcode_set))
+        
+    return set(garbage_opcode_dict[0]).intersection(*garbage_opcode_dict)
 
 def find_garbage_opcode_index(sample: pickle, garbage_opcode_set: set) -> list:
     
@@ -113,7 +113,7 @@ def remove_garbage_n_neighbor(n: int, sample: pickle, garbage_opcode_index: list
     return sample_garbage_removed
 
 def get_parser():
-    parser = argparse.ArgumentParser(description = "Garbage Opcode Removal")
+    parser = argparse.ArgumentParser(description = "【Garbage Opcode Detector】- Dictionary Intersection")
     parser.add_argument("-r", "--reference_ratio", type = str, help = "Enter reference ratio")
     parser.add_argument("-n", "--neighbor", type = str, help = "Enter neighbor amount")
     return parser
