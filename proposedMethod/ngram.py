@@ -29,21 +29,20 @@ def createCorpusDataset(benignPath: str, malwarePath: str) -> list and list:
     return opcode_corpus, label
 
 def Countvec(X: list, ng_min: int, ng_max: int) -> np.array:
-    vectorizer = CountVectorizer(ngram_range = (ng_min, ng_max), max_features = 100)
+    vectorizer = CountVectorizer(ngram_range = (ng_min, ng_max))
     return vectorizer.fit_transform(X)
 
 def RandomForestModel(_max_depth: int, X_train: pd.DataFrame, y_train: pd.DataFrame, modelName: str) -> None:
     
     # train
     print("Training...")
-    clf = RandomForestClassifier(max_depth = _max_depth, random_state = 0)
+    clf = RandomForestClassifier(max_depth = _max_depth)
     start = time.time()
     clf.fit(X_train, y_train)
     stop = time.time()
     # save model
     joblib.dump(clf, modelName)
     print(f"Training time: {stop - start} s")
-    print()
 
 def get_parser():
     parser = argparse.ArgumentParser(description = "N-gram")

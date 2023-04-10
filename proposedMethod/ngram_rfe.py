@@ -4,6 +4,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import confusion_matrix
 from sklearn.feature_selection import RFECV
+from sklearn.feature_selection import RFE
 import os
 import argparse
 from tqdm import tqdm
@@ -31,28 +32,30 @@ def createCorpusDataset(benignPath: str, malwarePath: str) -> list and list:
     return opcode_corpus, label
 
 def TFIDFvec(X: list, ng_min: int, ng_max: int) -> np.array:
-    vectorizer = TfidfVectorizer(ngram_range = (ng_min, ng_max), max_features = 100)
+    vectorizer = TfidfVectorizer(ngram_range = (ng_min, ng_max))
     return vectorizer.fit_transform(X)
 
 def Countvec(X: list, ng_min: int, ng_max: int) -> np.array:
-    vectorizer = CountVectorizer(ngram_range = (ng_min, ng_max), max_features = 100)
+    vectorizer = CountVectorizer(ngram_range = (ng_min, ng_max))
     return vectorizer.fit_transform(X)
 
 def RandomForestModel_RFE(_max_depth: int, X_train: pd.DataFrame, y_train: pd.DataFrame, modelName: str) -> None:
     
     # train
     print("Training...")
-    clf = RandomForestClassifier(max_depth = _max_depth, random_state = 0)
+    clf = RandomForestClassifier(max_depth = _max_depth, random_state = 42)
     start = time.time()
     # clf.fit(X_train, y_train)
     # RFE
-    rfe = RFECV(clf, step=0.1, cv=3, scoring="accuracy")
+    rfe = RFE(clf, step=0.2)
+    # RFCVE
+    # rfe = RFECV(clf, step=0.2, cv=2, scoring="accuracy", n_jobs=-1, min_features_to_select=1)
     rfe.fit(X_train, y_train)
+    print("n_features_", rfe.n_features_)
     stop = time.time()
     # save model
     joblib.dump(rfe, modelName)
     print(f"Training time: {stop - start} s")
-    print()
 
 def get_parser():
     parser = argparse.ArgumentParser(description = "N-gram RFE")
@@ -72,8 +75,8 @@ if __name__ == "__main__":
     # vectorize
     print("Vectorizing...")
     start = time.time()
-    X = TFIDFvec(X, args.n_gram[0], args.n_gram[1])
-    # X = Countvec(X, args.n_gram[0], args.n_gram[1])
+    # X = TFIDFvec(X, args.n_gram[0], args.n_gram[1])
+    X = Countvec(X, args.n_gram[0], args.n_gram[1])
     end = time.time()
     difference = end-start
     print("X shape:", X.shape)
@@ -90,12 +93,6 @@ if __name__ == "__main__":
     print("test_set shape :", X_test.shape)
     print("test_label shape :", len(y_test))
     print()
-
-    # # Feature Importances
-    # f_i = list(zip(clf[0].get_feature_names_out(), clf[1].feature_importances_))
-    # f_i.sort(key = lambda x : x[1])
-    # plt.barh([x[0] for x in f_i],[x[1] for x in f_i])
-    # plt.savefig("./ngram_tfidf/feature_importances.png")
 
     for depth in [2, 3, 5, 10, 15, 30, 50, 100, 1000]:
         print()
