@@ -59,7 +59,7 @@ def transform_to_feature(sample_packed_op: pickle):
 def features(sentence, index):
     """ sentence: [w1, w2, ...], index: the index of the word """
     return {
-        # 'word': sentence[index],
+        'word': sentence[index],
         'length': len(sentence[index]),
         # 'is_first': index == 0,
         # 'is_last': index == len(sentence) - 1,
@@ -82,6 +82,7 @@ def features(sentence, index):
 def get_parser():
     parser = argparse.ArgumentParser(description = "【Garbage Opcode Detector】- Removal")
     parser.add_argument("-n", "--neighbor", type = str, help = "Enter neighbor amount")
+    parser.add_argument("-m", "--model", type = str, help = "Enter model")
     return parser
 
 if __name__ == "__main__":
@@ -90,19 +91,33 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # All
-    benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_UFwR/"
-    malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_UFwR/"
-    benign_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_garbage_removed/"
-    malware_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_garbage_removed/"
+    # benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_UFwR/"
+    # malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_UFwR/"
+    # benign_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_garbage_removed/"
+    # malware_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_garbage_removed/"
+    # benign_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_GOPD/"
+    # malware_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_GOPD/"
+
 
     # # real_opcode rate > 50
     # benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_pos/"
     # malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_pos/"
     # benign_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_GOPD/"
     # malware_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_GOPD/"
-    
+
+    # 100 sample
+    benign_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_50/"
+    malware_packed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_50/"
+    benign_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/benign_GOPD/"
+    malware_garbage_removed = "../NICT/DataSet/Toyset/OpcodeSequence_retdec/malware_GOPD/"
+
     # load model
-    loaded_model = joblib.load("./model/nlp_pos_model.joblib")
+    # loaded_model = joblib.load("./model/nlp_pos_model.joblib")
+    # loaded_model = joblib.load("./model/nlp_pos_all_model.joblib")
+    loaded_model = joblib.load("./model/" + args.model + ".joblib")
+
+    # load cheat dict
+    # GOP_dict = loadPickle("./GOP_dict.pickle")
 
     for sample in tqdm(os.listdir(benign_packed), desc = "Benign"):
         
@@ -117,6 +132,15 @@ if __name__ == "__main__":
         except:
             savePickle(os.path.join(benign_garbage_removed, sample), sample_packed_op)
 
+        # # Cheat
+        # sample_packed_op = loadPickle(os.path.join(benign_packed, sample))
+        # gop_index = []
+        # for index, op in enumerate(sample_packed_op):
+        #     if op in GOP_dict:
+        #         gop_index.append(index)
+        # sample_garbage_removed = remove_garbage_n_neighbor(int(args.neighbor), sample_packed_op, gop_index)
+        # savePickle(os.path.join(benign_garbage_removed, sample), sample_garbage_removed)
+
     for sample in tqdm(os.listdir(malware_packed), desc = "Malware"):
         
         sample_packed_op = loadPickle(os.path.join(malware_packed, sample))
@@ -128,4 +152,13 @@ if __name__ == "__main__":
             sample_garbage_removed = remove_garbage_n_neighbor(int(args.neighbor), sample_packed_op, garbage_opcode_index)
             savePickle(os.path.join(malware_garbage_removed, sample), sample_garbage_removed)
         except:
-            savePickle(os.path.join(benign_garbage_removed, sample), sample_packed_op)
+            savePickle(os.path.join(malware_garbage_removed, sample), sample_packed_op)
+
+        # # Cheat
+        # sample_packed_op = loadPickle(os.path.join(malware_packed, sample))
+        # gop_index = []
+        # for index, op in enumerate(sample_packed_op):
+        #     if op in GOP_dict:
+        #         gop_index.append(index)
+        # sample_garbage_removed = remove_garbage_n_neighbor(int(args.neighbor), sample_packed_op, gop_index)
+        # savePickle(os.path.join(malware_garbage_removed, sample), sample_garbage_removed)
