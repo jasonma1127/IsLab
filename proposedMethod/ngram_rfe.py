@@ -75,8 +75,8 @@ if __name__ == "__main__":
     # vectorize
     print("Vectorizing...")
     start = time.time()
-    # X = TFIDFvec(X, args.n_gram[0], args.n_gram[1])
-    X = Countvec(X, args.n_gram[0], args.n_gram[1])
+    X = TFIDFvec(X, args.n_gram[0], args.n_gram[1])
+    # X = Countvec(X, args.n_gram[0], args.n_gram[1])
     end = time.time()
     difference = end-start
     print("X shape:", X.shape)
@@ -93,19 +93,43 @@ if __name__ == "__main__":
     print("test_set shape :", X_test.shape)
     print("test_label shape :", len(y_test))
     print()
-
+    
+    global_ACC = 0
+    global_FNR = 0
+    global_FPR = 0
+    
     for depth in [2, 3, 5, 10, 15, 30, 50, 100, 1000]:
         print()
         print("【Depth】", depth)
         RandomForestModel_RFE(depth, X_train, y_train, "./model_ngram_rfe/ngram_rfe_RF_" + str(depth))
         model = joblib.load("./model_ngram_rfe/ngram_rfe_RF_" + str(depth))
-        print("Accuracy:", model.score(X_test, y_test))
+        local_ACC = model.score(X_test, y_test)
+        print("Accuracy:", local_ACC)
         print()
 
-        # predict = model.predict(X_test)
-        # tn, fp, fn, tp = confusion_matrix(y_test, predict).ravel()
+        predict = model.predict(X_test)
+        tn, fp, fn, tp = confusion_matrix(y_test, predict).ravel()
         # print("實際 Malware, 預測 Malware:", tp)
         # print("實際 Benign, 預測 Benign:", tn)
         # print("實際 Malware, 預測 Benign:", fn)
         # print("實際 Benign, 預測 Malware:", fp)
+        local_FNR = fn/(tn+fn)
+        local_FPR = fp/(tn+fp)
+        print("漏報率:", local_FNR)
+        print("誤報率:", local_FPR)
+        print()
+        
+        if local_ACC > global_ACC:
+            global_ACC = local_ACC
+            global_FNR = local_FNR
+            global_FPR = local_FPR
+
+
+    print()
+    print("【Final】")
+    print("Accuracy:", global_ACC)
+    print()
+    print("漏報率:", global_FNR)
+    print("誤報率:", global_FPR)
+    print()
     
