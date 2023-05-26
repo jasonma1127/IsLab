@@ -128,7 +128,7 @@ elif method == "ls":
 model = Recursive_Feature_Elimination(clf, X_train, y_train, args.cv, args.step)
 # model = Recursive_Feature_Elimination(clf, X, y)
 
-filename = "RFE_cv_" + args.cv + "_step_" + args.step + ".svg"
+filename = "RFE_cv_" + str(args.cv) + "_step_" + str(args.step) + ".svg"
 model.show(outpath="./RFE_visual/" + filename)
 
 ACC = model.score(X_test, y_test)
